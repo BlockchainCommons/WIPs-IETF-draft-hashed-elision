@@ -5,11 +5,11 @@
 Network Working Group                                      S. Appelcline
 Internet-Draft                                                W. McNally
 Intended status: Informational                                  C. Allen
-Expires: 18 July 2024                                 Blockchain Commons
-                                                         15 January 2024
+Expires: 4 August 2024                                Blockchain Commons
+                                                         1 February 2024
 
 
-        Hashed Data Elision: Problem Statement and Areas of Work
+ Deterministic Hashed Data Elision: Problem Statement and Areas of Work
                  draft-appelcline-hashed-elision-latest
 
 Abstract
@@ -19,7 +19,7 @@ Abstract
    can help protocols to fulfill the guidelines of RFC 6973: Privacy
    Considerations for Internet Protocols and RFC 8280: Research into
    Human Rights Protocol Considerations.  Additional details discuss how
-   the extant Gordian Envelope draft can provide additional benefits in
+   the extant Gordian Envelope draft can provide further benefits in
    these categories.
 
 About This Document
@@ -47,7 +47,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 18 July 2024.
+   This Internet-Draft will expire on 4 August 2024.
 
 Copyright Notice
 
@@ -93,36 +93,37 @@ Table of Contents
 
 1.  Introduction
 
-   Current IETF guidelines for privacy and human rights considerations
-   [RFC6973] in internet protocols lack the specificity needed for
-   practical implementation, leading to privacy threats such as
-   correlation, secondary use, and unnecessary disclosure of data.
+   IETF released guidelines for privacy considerations in 2013 with
+   [RFC6973] and then expanded upon that with human-rights
+   considerations in 2017 with [RFC8280].  Both RFCs provide thoughtful
+   ideas for how privacy can be improved in internet protocols, and how
+   that can support human rights on the internet.
 
-   IETF released guidelines for privacy considerations in 2013 with RFC
-   6973 and then expanded upon that with human-rights considerations in
-   2017 with [RFC8280].  Both RFCs provide thoughtful ideas for how
-   privacy can be improved in internet protocols, and how that can
-   support human rights on the internet.
-
-   However, as generalized guidelines the RFCs don’t provide the
+   However, as generalized guidelines these RFCs don’t provide the
    specifics that might be required to incorporate these guidelines into
-   new protocols.  This document suggests more specific areas of work
-   based in part on the Data Minimization suggestions of §6.1 of RFC
-   6973, and expands them to also support some of the Human Rights
-   Guidelines outlined in §6.2 of RFC 8280.
+   new protocols.  This leads to privacy threats such as correlation,
+   secondary use, and unnecessary disclosure of data.  This document
+   suggests more specific areas of work based in part on the Data
+   Minimization suggestions of §6.1 of RFC 6973, and expands them to
+   also support some of the Human Rights Guidelines outlined in §6.2 of
+   RFC 8280.  It does so through the advancement of a hashed data
+   elision methodology, which allows for the optional removal of data
+   while maintaining hashes of that data to ensure data integrity.
 
 2.  Problem Statement
 
 2.1.  Correlation, Secondary Use, and Disclosure All Threaten Privacy
 
-   Often, digital data transmission operates on an all-or-nothing basis:
-   sharing data means full disclosure.  This can threaten privacy in
-   multiple ways:
+   Digital data transmission often operates on an all-or-nothing basis:
+   sharing data means full disclosure.  There is no standard methodology
+   for minimizing data nor for eliding parts of a data packet.  Releases
+   large packets of data, much of it unnecessary, can threaten privacy
+   in multiple ways:
 
    *  Correlation can combine data from different sources,
-      unintentionally revealing comprehensive individual data,
-      significantly more than was intended.  This is highlighted as a
-      problem in S.5.2.1 of RFC 6973.
+      unintentionally revealing comprehensive individual data that is
+      often significantly more than was intended.  This is highlighted
+      as a problem in S.5.2.1 of RFC 6973.
 
    *  Secondary Use permits data acquirers to repurpose it beyond its
       original intent.  This is highlighted as a problem in S.5.2.3 of
@@ -140,64 +141,69 @@ Table of Contents
       Insufficient
 
    §6.1 of RFC 6973 lists anonymity and pseudonymity as two
-   methodologies for creating data minimization.  This means removing
+   methodologies for creating Data Minimization.  This means removing
    uniquely identifying data and/or reducing the amount of personal data
    that is transmitted.
 
    Though anonymity and pseudonymity are minimal requirements for
-   improving the privacy of digital data, they are insufficient.  To
-   best address privacy requires reducing the amount of all data found
-   in any disclosure to the bare minimum required for a specific
-   disclosure.
+   improving the privacy of digital data, they are insufficient, as data
+   that is pseudoanonymous or anonymous still has the danger of being
+   correlated.  To best address privacy requires reducing the amount of
+   all data found in any disclosure to the bare minimum required for a
+   specific disclosure.
 
 2.3.  Simplistic Data Minimization Can Hinder Other Humans Rights
       Solutions
 
-   Simplistic data minimization focuses on cutting out unnecessary
-   content that is not required for a specific task.  Doing this is a
-   necessity to improve privacy through data minimization, but again
-   it’s not sufficient.
+   Data minimization focuses on cutting out unnecessary content that is
+   not required for a specific task.  Though Data Minimization is a
+   general requirement to improve privacy, doing so in a simplistic
+   manner is not sufficient.
 
-   This is because simplistic data minimization excises everything about
+   This is because simplistic Data Minimization excises everything about
    data, which can cause problems for the Integrity and potentially the
    Authenticity of the original data set.  These are needed per the
    Guidelines for Human Rights, as outlined in §6.2.16 and §6.2.17 of
    RFC 8280.
 
-   A better solution for data minimization is required, which does not
-   ignore other Human Rights needs as it improves privacy.  Hashed data
-   elision can provide such a solution.
+   A better solution for Data Minimization would not ignore other Human
+   Rights needs as it improves privacy.  Hashed data elision, which
+   preserves hashes for data that has been cut, can provide such a
+   solution.
 
 2.4.  Any Data Can Be Too Much Data
 
-   There are many situations where data minimization is important:
-   because a party needs to know data that they do not previously know.
-   However, there are other situations where a party doesn’t need to
-   know some freeform data, but instead requires proof that a specific
-   data precept is true.  The traditional example is proof whether
-   someone is 21 or older, for buying alcohol in the US.
+   A more nuanced Data Minimization system can solve many problems.
+   However, there are also situations where a party doesn’t need to know
+   any specific data, but instead requires proof that a general data
+   precept is true.  The traditional example is proof whether someone is
+   21 or older, for buying alcohol in the United States.  With Data
+   Minimization, the person's precise age would still be provided, even
+   though all that's actually needed is an affirmation that the person
+   was born more than 21 years ago.
 
    In these cases, privacy threats can be reduced even more by providing
-   no data, simply the proof that a certain precept is true.  This can
-   offer very strong proof against Correlation (§5.2.1 of RFC 6973) and
-   obviously minimizes Disclosure (§5.2.4 of RFC 6973).
+   no data, simply the proof that a general precept is true.  This can
+   offer very strong protection against Correlation (§5.2.1 of RFC 6973)
+   and obviously minimizes Disclosure (§5.2.4 of RFC 6973).
 
    Though some systems such as BBS+ Signatures and other Zero Knowledge
    Proofs system can support superior anti-correlation with “proof of
-   knowledge of the undisclosed signature”, a more simple salted hashed
-   data elision often can provide easier solutions for many classes of
-   “inclusion” proofs.
+   knowledge of the undisclosed signature”, a more simple salted and
+   hashed data elision often can provide easier solutions for many
+   classes of “inclusion” proofs.
 
 3.  Areas of Work
 
 3.1.  Core Areas of Work
 
    This section tries to identify and structure areas of work to address
-   the aforementioned topics by turning the guidelines of RFC 6973 and
+   the aforementioned problems by turning the guidelines of RFC 6973 and
    RFC 8280 into more precise specifications or requirements.  It
    focuses on hashed data elision as a core area of work, but in a
-   section on optional areas of work discusses other advancements that
-   can further support RFC 6973 and especially RFC 8280.
+   section on optional areas of work discusses more specific
+   advancements that can further support RFC 6973 and especially RFC
+   8280.
 
 3.1.1.  Support Data Minimization
 
@@ -205,7 +211,7 @@ Table of Contents
    for improving privacy and reducing problems such as Correlation,
    Secondary Use, and Disclosure.
 
-   To fully support Data Minimization, a specification must:
+   To support Data Minimization, a specification MUST:
 
    1.  Allow for the elision of some content from a larger package of
        data.
@@ -213,34 +219,52 @@ Table of Contents
    2.  Allow for the holder of that data to do that elision, rather than
        restricting it to only issuers.
 
+   Elision is the obvious requirement for Data Minimization: it's the
+   removal of data.  The question of who can elide data becomes more
+   important when data is signed as a means of authentication, such as
+   in credentials.  In these situations, elision is traditionally
+   restricted to the issuer of the credential, which effectively denies
+   the holder from doing so.  To support Data Minimization requires the
+   holder to be able to do so as well, while maintaining any signatures.
+
 3.1.2.  Incorporate Deterministic Hashing
 
    As noted in §2.3, above, simplistic Data Minimization can cause other
    human rights problems such as a lack of Authenticity or Integrity
    checking.  This can be resolved in a specification by requiring a
-   fingerprint that can be used to verify elided data.  It must:
+   fingerprint that can be used to verify elided data.
+
+   To incorporate deterministic hashing, a specification MUST:
 
    1.  Allow elided data to be verified with a fingerprint.
 
-   2.  Maintain the validity of authenticity checks such as signatures
-       through that fingerprint.
-
-   3.  Ensure that the fingerprint is unidirectional, so that the
+   2.  Ensure that the fingerprint is unidirectional, so that the
        fingerprint can prove the existence of the data, but the data
        cannot be derived from the fingerprint.
 
-   This can typically be done throug a hash function such as SHA-256 or
-   a newer function such as BLAKE3.  Combined with the requirements of
-   §3.1.1, above, it would require data to be hashed prior to its
-   elision and for any signature to cover the hashes, not the unhashed
-   data.
+   3.  Maintain the validity of authenticity checks by requirements that
+       any signatures be made across the fingerprint not the original
+       data.
+
+   A fingerprint that is generated through a hash function such as
+   SHA-256 or a newer function such as BLAKE3 will generally meet the
+   first two requirements.
+
+   The third requirement is designed to support the requirements for
+   Data Minimization in §3.1.1, above.  If data is hashed, but any
+   signature is applied to the hash rather than the original data, then
+   a holder can choose to elide the data or not, as they see fit, but
+   the signature still remains valid.  This is the strong core of
+   deterministic hashed data elision, harmonizing Data Minimization and
+   data integretity.
 
 3.1.3.  Enable Inclusion Proofs
 
    Because data does not always need to be shared to provide the
    verification required by a validator, support of data proofs can
-   provide additional privacy and human rights benefits.  To support
-   this, a specification must:
+   provide additional privacy and human rights benefits.
+
+   To enable inclusion proofs, a specification MUST:
 
    1.  Allow for the revelation of specific fingerprints.
 
@@ -255,7 +279,12 @@ Table of Contents
    bit of data, such as their residence in a specific country or state,
    demonstrate that proof’s creation, and show that it matches the hash
    of elided data.  However, the holder does so only if and when they
-   wish: the data is never known unless they do so.
+   wish: only the hash is ever public known, the data is never known
+   unless the holder produces a proof.  Usually, the proof is only
+   offered to an entity who is verifying a specific data element,
+   effectively turning it from a data revelation method to a data
+   verification method.  This provides strong Data Minimization that is
+   holder controlled.
 
    Though other methodologies exist for proving the content of data,
    such as Zero-Knowledge Proofs and BBS+ Signatures, inclusion proofs
@@ -269,12 +298,11 @@ Table of Contents
    privacy, where data about a specific user is contained within a much
    larger hash of data, which can be widely published without danger.
    This puts all the agency for data revelation in an individual user’s
-   hand, and does it without any need to “phone home”, meaning that not
+   hand and does it without any need to “phone home”, meaning that not
    even the original publisher of the data would know when that data
    were being checked.
 
-   To ensure that inclusion proofs can be extended to herd privacy, a
-   specification must:
+   To facilitate herd privacy, a specification MUST:
 
    1.  Use a branching structure for data storage such as a Merkle Tree
        where hashes can be further hashed together at high levels in a
@@ -282,22 +310,29 @@ Table of Contents
 
    2.  Allow for the publication of top-level or high-level hashes.
 
-   3.  Enable individual holders to reveal paths that connect their
-       individual data up to the top-level or high-level hash through
-       any number of branches.
+   3.  Enable individual holders to independently, without aid or
+       assistance, reveal paths that connect their individual data up to
+       the top-level or high-level hash through any number of branches.
 
    4.  Build that structure in such a way that a minimum of other hashes
        are revealed when a user reveals a path to their own data; or
        else ensure that any other hashes revealed are worthless without
        knowledge of secret data, such as a salt.
 
-   5.  Otherwise support the creation of inclusion proofs for proving
-       their low-level individual data.
+   5.  Otherwise support the creation of inclusion proofs for proving an
+       individual holder's low-level individual data without the
+       individual needing to contact the publisher of the data in any
+       way.
 
-   Ensuring herd privacy in part focuses upon empowering the user, but
-   it also depends on a thoughtful creation of the hash tree structure,
-   such that other information can’t be guessed from the revelation of
-   hashes.
+   Herd privacy provides further benefits to privacy because a
+   credential publisher can publish data without ever having contact
+   with credential holders, and those holders can then choose to reveal
+   that data, or not, all without any knowledge of the publisher.
+   Requirements #1-4 suggest one way to do so using hashed elision and
+   merkle trees such that other information can’t be guessed from the
+   revelation of hashes, but the requirement #5 says that other
+   methodologies would be acceptable provided they meet the core needs
+   of a herd privacy system.
 
 3.2.  Optional Areas of Work
 
@@ -319,30 +354,30 @@ Table of Contents
    information about the original data.
 
    Incorporating encryption into a data specification offers the highest
-   level of privacy and of data minimization possible, as data can only
+   level of privacy and of Data Minimization possible, as data can only
    be viewed by select individual with the decryption key.  This is
    especially important for Confidentiality, which is referenced in
    §6.2.15 of RFC 8280.
 
-   Hashing encryption primarily improves Authenticity, per §6.2.17 of
-   RFC 8280.  As with other sorts of elided data, signatures will remain
+   Hashing encrypted data also improves Authenticity, per §6.2.17 of RFC
+   8280.  As with other sorts of elided data, signatures will remain
    valid even following compression, provided the signatures are applied
    to the data hash, not the original data.
 
 3.2.2.  Address Additional Human Rights Threats
 
-   As currently imagined, the Gordian Envelope Internet Draft also
-   offers support for several other Guidelines for Human Rights
-   Considerations that are listed in §6.2 of RFC 8280:
+   As currently detailed, the Gordian Envelope Internet-Draft also
+   supports several other Guidelines for Human Rights Considerations
+   that are listed in §6.2 of RFC 8280:
 
-   *  Privacy (S.6.2.2).  Besides the obvious privacy benefits of data
-      minimization, Gordian Envelope also improves privacy through
-      optional usage of metadata, which can be used to document the
-      sensitivity of contents, retention limits, etc.
+   *  Privacy (S.6.2.2).  Besides the obvious privacy benefits of Data
+      Minimization, Gordian Envelope also can improve privacy through
+      optional usage of integrated metadata, which can be used to
+      document the sensitivity of contents, retention limits, etc.
 
-   *  Accessibility (S.6.2.11).  Metadata can also be used to ensure
-      accessibility and internationalization of data through inclusions
-      of references with a variety of localizations.
+   *  Accessibility (S.6.2.11).  Integrated metadata can also be used to
+      ensure accessibility and internationalization of data through
+      inclusions of references with a variety of localizations.
 
    *  Censorship Resistance (S.6.2.6).  Gordian Envelope is built to
       support SCIDs, or self-certifying identifiers, which can be used
@@ -376,15 +411,15 @@ Table of Contents
    Support for privacy and for human rights has another requirement: it
    needs to be kept simple so that it finds actual use.
 
-   Gordian Envelope [GordianEnvelope] is a fundamentally simple data
-   format that only achieves complexity through iterative structure
-   design.
+   Gordian Envelope is a fundamentally simple data format that only
+   achieves complexity through iterative structure design.
 
 4.  Privacy Considerations
 
-   As outlined, the concept of hashed data elision and, more
-   specifically the Gordian Envelope specification, provide a wide
-   variety of privacy advancements.
+   As outlined, the general concept of hashed data elision and the
+   specific design of Gordian Envelope provide a wide variety of privacy
+   advancements.  They offer strong support for Data Minimization and
+   other guidelines found in RFC 6973 and RFC 8280.
 
    The biggest remaining privacy concern is of accidental correlation
    that can arise if different parties have different versions of the
@@ -399,15 +434,23 @@ Table of Contents
 
 5.  Security Considerations
 
-   The biggest security considerations focus on the strength of hashing
-   algorithms (and encryption algorithms if they’re used).  Potential
-   threats to hashes and encryption such as quantum computing would also
-   result in threats to any hashed data elision system.
+   Hashed data elision is intended to strengthen communication security,
+   primarily by enhancing confidentiality (through elision) while also
+   maintaining data integrity (through hashing).  Supporting this with a
+   signature system that signs hashes rather than original data also
+   allows for peer entity authentication, creating a strong foundation
+   for overall communication security.
+
+   However, that security depends on the strength of hashing algorithms
+   and encryption/signature algorithms.  Strong, unbroken hashes and
+   encryption schemes are required.  Potential threats to hashes and
+   encryption such as quantum computing would result in threats to any
+   hashed data elision system.
 
 6.  IANA Considerations
 
-   IANA is separately being queried on the allocation of certain CBOR
-   tags for IANA.
+   This document has no IANA actions.  Gordian Envelope has already been
+   assigned CBOR tag #200 by IANA.
 
 7.  Informative References
 
@@ -430,7 +473,8 @@ Table of Contents
 
 Appendix A.  Acknowledgments
 
-   Forthcoming.
+   The authors are grateful for the support of the CBOR working group in
+   discussions of Gordian Envelope and general guidance within the IETF.
 
 Authors' Addresses
 

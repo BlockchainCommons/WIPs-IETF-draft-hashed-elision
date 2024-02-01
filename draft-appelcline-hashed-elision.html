@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta content="Common,Latin" name="scripts">
 <meta content="initial-scale=1.0" name="viewport">
-<title>Hashed Data Elision: Problem Statement and Areas of Work</title>
+<title>Deterministic Hashed Data Elision: Problem Statement and Areas of Work</title>
 <meta content="Shannon Appelcline" name="author">
 <meta content="Wolf McNally" name="author">
 <meta content="Christopher Allen" name="author">
 <meta content="
-       This document discusses the privacy and human rights benefits of data minimization via the methodology of hashed data elision and how it can help protocols to fulfill the guidelines of RFC 6973: Privacy Considerations for Internet Protocols and RFC 8280: Research into Human Rights Protocol Considerations. Additional details discuss how the extant Gordian Envelope draft can provide additional benefits in these categories. 
+       This document discusses the privacy and human rights benefits of data minimization via the methodology of hashed data elision and how it can help protocols to fulfill the guidelines of RFC 6973: Privacy Considerations for Internet Protocols and RFC 8280: Research into Human Rights Protocol Considerations. Additional details discuss how the extant Gordian Envelope draft can provide further benefits in these categories. 
     " name="description">
 <meta content="xml2rfc 3.17.1" name="generator">
 <meta content="Internet-Draft" name="keyword">
@@ -1047,11 +1047,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">HashedElision</td>
-<td class="right">January 2024</td>
+<td class="right">February 2024</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Appelcline, et al.</td>
-<td class="center">Expires 18 July 2024</td>
+<td class="center">Expires 4 August 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1064,12 +1064,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-appelcline-hashed-elision-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-01-15" class="published">15 January 2024</time>
+<time datetime="2024-02-01" class="published">1 February 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-07-18">18 July 2024</time></dd>
+<dd class="expires"><time datetime="2024-08-04">4 August 2024</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1087,10 +1087,10 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </dd>
 </dl>
 </div>
-<h1 id="title">Hashed Data Elision: Problem Statement and Areas of Work</h1>
+<h1 id="title">Deterministic Hashed Data Elision: Problem Statement and Areas of Work</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">This document discusses the privacy and human rights benefits of data minimization via the methodology of hashed data elision and how it can help protocols to fulfill the guidelines of RFC 6973: Privacy Considerations for Internet Protocols and RFC 8280: Research into Human Rights Protocol Considerations. Additional details discuss how the extant Gordian Envelope draft can provide additional benefits in these categories.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">This document discusses the privacy and human rights benefits of data minimization via the methodology of hashed data elision and how it can help protocols to fulfill the guidelines of RFC 6973: Privacy Considerations for Internet Protocols and RFC 8280: Research into Human Rights Protocol Considerations. Additional details discuss how the extant Gordian Envelope draft can provide further benefits in these categories.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-about-this-document">
@@ -1121,7 +1121,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 18 July 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 4 August 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1233,9 +1233,8 @@ svg :is([fill="white"], [fill^="#fff"]) {
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">Current IETF guidelines for privacy and human rights considerations <span>[<a href="#RFC6973" class="cite xref">RFC6973</a>]</span> in internet protocols lack the specificity needed for practical implementation, leading to privacy threats such as correlation, secondary use, and unnecessary disclosure of data.<a href="#section-1-1" class="pilcrow">¶</a></p>
-<p id="section-1-2">IETF released guidelines for privacy considerations in 2013 with RFC 6973 and then expanded upon that with human-rights considerations in 2017 with <span>[<a href="#RFC8280" class="cite xref">RFC8280</a>]</span>. Both RFCs provide thoughtful ideas for how privacy can be improved in internet protocols, and how that can support human rights on the internet.<a href="#section-1-2" class="pilcrow">¶</a></p>
-<p id="section-1-3">However, as generalized guidelines the RFCs don’t provide the specifics that might be required to incorporate these guidelines into new protocols. This document suggests more specific areas of work based in part on the Data Minimization suggestions of §6.1 of RFC 6973, and expands them to also support some of the Human Rights Guidelines outlined in §6.2 of RFC 8280.<a href="#section-1-3" class="pilcrow">¶</a></p>
+<p id="section-1-1">IETF released guidelines for privacy considerations in 2013 with <span>[<a href="#RFC6973" class="cite xref">RFC6973</a>]</span> and then expanded upon that with human-rights considerations in 2017 with <span>[<a href="#RFC8280" class="cite xref">RFC8280</a>]</span>. Both RFCs provide thoughtful ideas for how privacy can be improved in internet protocols, and how that can support human rights on the internet.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">However, as generalized guidelines these RFCs don’t provide the specifics that might be required to incorporate these guidelines into new protocols. This leads to privacy threats such as correlation, secondary use, and unnecessary disclosure of data. This document suggests more specific areas of work based in part on the Data Minimization suggestions of §6.1 of RFC 6973, and expands them to also support some of the Human Rights Guidelines outlined in §6.2 of RFC 8280. It does so through the advancement of a hashed data elision methodology, which allows for the optional removal of data while maintaining hashes of that data to ensure data integrity.<a href="#section-1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="problem-statement">
@@ -1248,9 +1247,9 @@ svg :is([fill="white"], [fill^="#fff"]) {
         <h3 id="name-correlation-secondary-use-a">
 <a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-correlation-secondary-use-a" class="section-name selfRef">Correlation, Secondary Use, and Disclosure All Threaten Privacy</a>
         </h3>
-<p id="section-2.1-1">Often, digital data transmission operates on an all-or-nothing basis: sharing data means full disclosure. This can threaten privacy in multiple ways:<a href="#section-2.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.1-1">Digital data transmission often operates on an all-or-nothing basis: sharing data means full disclosure. There is no standard methodology for minimizing data nor for eliding parts of a data packet. Releases large packets of data, much of it unnecessary, can threaten privacy in multiple ways:<a href="#section-2.1-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-2.1-2.1">Correlation can combine data from different sources, unintentionally revealing comprehensive individual data, significantly more than was intended. This is highlighted as a problem in S.5.2.1 of RFC 6973.<a href="#section-2.1-2.1" class="pilcrow">¶</a>
+<li class="normal" id="section-2.1-2.1">Correlation can combine data from different sources, unintentionally revealing comprehensive individual data that is often significantly more than was intended. This is highlighted as a problem in S.5.2.1 of RFC 6973.<a href="#section-2.1-2.1" class="pilcrow">¶</a>
 </li>
           <li class="normal" id="section-2.1-2.2">Secondary Use permits data acquirers to repurpose it beyond its original intent. This is highlighted as a problem in S.5.2.3 of RFC 6973.<a href="#section-2.1-2.2" class="pilcrow">¶</a>
 </li>
@@ -1265,8 +1264,8 @@ svg :is([fill="white"], [fill^="#fff"]) {
         <h3 id="name-data-minimization-through-a">
 <a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-data-minimization-through-a" class="section-name selfRef">Data Minimization through Anonymity or Pseudonymity is Insufficient</a>
         </h3>
-<p id="section-2.2-1">§6.1 of RFC 6973 lists anonymity and pseudonymity as two methodologies for creating data minimization. This means removing uniquely identifying data and/or reducing the amount of personal data that is transmitted.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
-<p id="section-2.2-2">Though anonymity and pseudonymity are minimal requirements for improving the privacy of digital data, they are insufficient. To best address privacy requires reducing the amount of all data found in any disclosure to the bare minimum required for a specific disclosure.<a href="#section-2.2-2" class="pilcrow">¶</a></p>
+<p id="section-2.2-1">§6.1 of RFC 6973 lists anonymity and pseudonymity as two methodologies for creating Data Minimization. This means removing uniquely identifying data and/or reducing the amount of personal data that is transmitted.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
+<p id="section-2.2-2">Though anonymity and pseudonymity are minimal requirements for improving the privacy of digital data, they are insufficient, as data that is pseudoanonymous or anonymous still has the danger of being correlated. To best address privacy requires reducing the amount of all data found in any disclosure to the bare minimum required for a specific disclosure.<a href="#section-2.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="simplistic-data-minimization-can-hinder-other-humans-rights-solutions">
@@ -1274,9 +1273,9 @@ svg :is([fill="white"], [fill^="#fff"]) {
         <h3 id="name-simplistic-data-minimizatio">
 <a href="#section-2.3" class="section-number selfRef">2.3. </a><a href="#name-simplistic-data-minimizatio" class="section-name selfRef">Simplistic Data Minimization Can Hinder Other Humans Rights Solutions</a>
         </h3>
-<p id="section-2.3-1">Simplistic data minimization focuses on cutting out unnecessary content that is not required for a specific task. Doing this is a necessity to improve privacy through data minimization, but again it’s not sufficient.<a href="#section-2.3-1" class="pilcrow">¶</a></p>
-<p id="section-2.3-2">This is because simplistic data minimization excises everything about data, which can cause problems for the Integrity and potentially the Authenticity of the original data set. These are needed per the Guidelines for Human Rights, as outlined in §6.2.16 and §6.2.17 of RFC 8280.<a href="#section-2.3-2" class="pilcrow">¶</a></p>
-<p id="section-2.3-3">A better solution for data minimization is required, which does not ignore other Human Rights needs as it improves privacy. Hashed data elision can provide such a solution.<a href="#section-2.3-3" class="pilcrow">¶</a></p>
+<p id="section-2.3-1">Data minimization focuses on cutting out unnecessary content that is not required for a specific task. Though Data Minimization is a general requirement to improve privacy, doing so in a simplistic manner is not sufficient.<a href="#section-2.3-1" class="pilcrow">¶</a></p>
+<p id="section-2.3-2">This is because simplistic Data Minimization excises everything about data, which can cause problems for the Integrity and potentially the Authenticity of the original data set. These are needed per the Guidelines for Human Rights, as outlined in §6.2.16 and §6.2.17 of RFC 8280.<a href="#section-2.3-2" class="pilcrow">¶</a></p>
+<p id="section-2.3-3">A better solution for Data Minimization would not ignore other Human Rights needs as it improves privacy. Hashed data elision, which preserves hashes for data that has been cut, can provide such a solution.<a href="#section-2.3-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="any-data-can-be-too-much-data">
@@ -1284,9 +1283,9 @@ svg :is([fill="white"], [fill^="#fff"]) {
         <h3 id="name-any-data-can-be-too-much-da">
 <a href="#section-2.4" class="section-number selfRef">2.4. </a><a href="#name-any-data-can-be-too-much-da" class="section-name selfRef">Any Data Can Be Too Much Data</a>
         </h3>
-<p id="section-2.4-1">There are many situations where data minimization is important: because a party needs to know data that they do not previously know. However, there are other situations where a party doesn’t need to know some freeform data, but instead requires proof that a specific data precept is true. The traditional example is proof whether someone is 21 or older, for buying alcohol in the US.<a href="#section-2.4-1" class="pilcrow">¶</a></p>
-<p id="section-2.4-2">In these cases, privacy threats can be reduced even more by providing no data, simply the proof that a certain precept is true. This can offer very strong proof against Correlation (§5.2.1 of RFC 6973) and obviously minimizes Disclosure (§5.2.4 of RFC 6973).<a href="#section-2.4-2" class="pilcrow">¶</a></p>
-<p id="section-2.4-3">Though some systems such as BBS+ Signatures and other Zero Knowledge Proofs system can support superior anti-correlation with “proof of knowledge of the undisclosed signature”, a more simple salted hashed data elision often can provide easier solutions for many classes of “inclusion” proofs.<a href="#section-2.4-3" class="pilcrow">¶</a></p>
+<p id="section-2.4-1">A more nuanced Data Minimization system can solve many problems. However, there are also situations where a party doesn’t need to know any specific data, but instead requires proof that a general data precept is true. The traditional example is proof whether someone is 21 or older, for buying alcohol in the United States. With Data Minimization, the person's precise age would still be provided, even though all that's actually needed is an affirmation that the person was born more than 21 years ago.<a href="#section-2.4-1" class="pilcrow">¶</a></p>
+<p id="section-2.4-2">In these cases, privacy threats can be reduced even more by providing no data, simply the proof that a general precept is true. This can offer very strong protection against Correlation (§5.2.1 of RFC 6973) and obviously minimizes Disclosure (§5.2.4 of RFC 6973).<a href="#section-2.4-2" class="pilcrow">¶</a></p>
+<p id="section-2.4-3">Though some systems such as BBS+ Signatures and other Zero Knowledge Proofs system can support superior anti-correlation with “proof of knowledge of the undisclosed signature”, a more simple salted and hashed data elision often can provide easier solutions for many classes of “inclusion” proofs.<a href="#section-2.4-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1301,20 +1300,21 @@ svg :is([fill="white"], [fill^="#fff"]) {
         <h3 id="name-core-areas-of-work">
 <a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-core-areas-of-work" class="section-name selfRef">Core Areas of Work</a>
         </h3>
-<p id="section-3.1-1">This section tries to identify and structure areas of work to address the aforementioned topics by turning the guidelines of RFC 6973 and RFC 8280 into more precise specifications or requirements. It focuses on hashed data elision as a core area of work, but in a section on optional areas of work discusses other advancements that can further support RFC 6973 and especially RFC 8280.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.1-1">This section tries to identify and structure areas of work to address the aforementioned problems by turning the guidelines of RFC 6973 and RFC 8280 into more precise specifications or requirements. It focuses on hashed data elision as a core area of work, but in a section on optional areas of work discusses more specific advancements that can further support RFC 6973 and especially RFC 8280.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
 <div id="support-data-minimization">
 <section id="section-3.1.1">
           <h4 id="name-support-data-minimization">
 <a href="#section-3.1.1" class="section-number selfRef">3.1.1. </a><a href="#name-support-data-minimization" class="section-name selfRef">Support Data Minimization</a>
           </h4>
 <p id="section-3.1.1-1">As suggested by RFC 6973, Data Minimization is a prime methodology for improving privacy and reducing problems such as Correlation, Secondary Use, and Disclosure.<a href="#section-3.1.1-1" class="pilcrow">¶</a></p>
-<p id="section-3.1.1-2">To fully support Data Minimization, a specification must:<a href="#section-3.1.1-2" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-2">To support Data Minimization, a specification MUST:<a href="#section-3.1.1-2" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-3.1.1-3">
 <li id="section-3.1.1-3.1">Allow for the elision of some content from a larger package of data.<a href="#section-3.1.1-3.1" class="pilcrow">¶</a>
 </li>
             <li id="section-3.1.1-3.2">Allow for the holder of that data to do that elision, rather than restricting it to only issuers.<a href="#section-3.1.1-3.2" class="pilcrow">¶</a>
 </li>
           </ol>
+<p id="section-3.1.1-4">Elision is the obvious requirement for Data Minimization: it's the removal of data. The question of who can elide data becomes more important when data is signed as a means of authentication, such as in credentials. In these situations, elision is traditionally restricted to the issuer of the credential, which effectively denies the holder from doing so. To support Data Minimization requires the holder to be able to do so as well, while maintaining any signatures.<a href="#section-3.1.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="incorporate-deterministic-hashing">
@@ -1322,16 +1322,18 @@ svg :is([fill="white"], [fill^="#fff"]) {
           <h4 id="name-incorporate-deterministic-h">
 <a href="#section-3.1.2" class="section-number selfRef">3.1.2. </a><a href="#name-incorporate-deterministic-h" class="section-name selfRef">Incorporate Deterministic Hashing</a>
           </h4>
-<p id="section-3.1.2-1">As noted in §2.3, above, simplistic Data Minimization can cause other human rights problems such as a lack of Authenticity or Integrity checking. This can be resolved in a specification by requiring a fingerprint that can be used to verify elided data. It must:<a href="#section-3.1.2-1" class="pilcrow">¶</a></p>
-<ol start="1" type="1" class="normal type-1" id="section-3.1.2-2">
-<li id="section-3.1.2-2.1">Allow elided data to be verified with a fingerprint.<a href="#section-3.1.2-2.1" class="pilcrow">¶</a>
+<p id="section-3.1.2-1">As noted in §2.3, above, simplistic Data Minimization can cause other human rights problems such as a lack of Authenticity or Integrity checking. This can be resolved in a specification by requiring a fingerprint that can be used to verify elided data.<a href="#section-3.1.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.1.2-2">To incorporate deterministic hashing, a specification MUST:<a href="#section-3.1.2-2" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-3.1.2-3">
+<li id="section-3.1.2-3.1">Allow elided data to be verified with a fingerprint.<a href="#section-3.1.2-3.1" class="pilcrow">¶</a>
 </li>
-            <li id="section-3.1.2-2.2">Maintain the validity of authenticity checks such as signatures through that fingerprint.<a href="#section-3.1.2-2.2" class="pilcrow">¶</a>
+            <li id="section-3.1.2-3.2">Ensure that the fingerprint is unidirectional, so that the fingerprint can prove the existence of the data, but the data cannot be derived from the fingerprint.<a href="#section-3.1.2-3.2" class="pilcrow">¶</a>
 </li>
-            <li id="section-3.1.2-2.3">Ensure that the fingerprint is unidirectional, so that the fingerprint can prove the existence of the data, but the data cannot be derived from the fingerprint.<a href="#section-3.1.2-2.3" class="pilcrow">¶</a>
+            <li id="section-3.1.2-3.3">Maintain the validity of authenticity checks by requirements that any signatures be made across the fingerprint not the original data.<a href="#section-3.1.2-3.3" class="pilcrow">¶</a>
 </li>
           </ol>
-<p id="section-3.1.2-3">This can typically be done throug a hash function such as SHA-256 or a newer function such as BLAKE3. Combined with the requirements of §3.1.1, above, it would require data to be hashed prior to its elision and for any signature to cover the hashes, not the unhashed data.<a href="#section-3.1.2-3" class="pilcrow">¶</a></p>
+<p id="section-3.1.2-4">A fingerprint that is generated through a hash function such as SHA-256 or a newer function such as BLAKE3 will generally meet the first two requirements.<a href="#section-3.1.2-4" class="pilcrow">¶</a></p>
+<p id="section-3.1.2-5">The third requirement is designed to support the requirements for Data Minimization in §3.1.1, above. If data is hashed, but any signature is applied to the hash rather than the original data, then a holder can choose to elide the data or not, as they see fit, but the signature still remains valid. This is the strong core of deterministic hashed data elision, harmonizing Data Minimization and data integretity.<a href="#section-3.1.2-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="enable-inclusion-proofs">
@@ -1339,17 +1341,18 @@ svg :is([fill="white"], [fill^="#fff"]) {
           <h4 id="name-enable-inclusion-proofs">
 <a href="#section-3.1.3" class="section-number selfRef">3.1.3. </a><a href="#name-enable-inclusion-proofs" class="section-name selfRef">Enable Inclusion Proofs</a>
           </h4>
-<p id="section-3.1.3-1">Because data does not always need to be shared to provide the verification required by a validator, support of data proofs can provide additional privacy and human rights benefits. To support this, a specification must:<a href="#section-3.1.3-1" class="pilcrow">¶</a></p>
-<ol start="1" type="1" class="normal type-1" id="section-3.1.3-2">
-<li id="section-3.1.3-2.1">Allow for the revelation of specific fingerprints.<a href="#section-3.1.3-2.1" class="pilcrow">¶</a>
+<p id="section-3.1.3-1">Because data does not always need to be shared to provide the verification required by a validator, support of data proofs can provide additional privacy and human rights benefits.<a href="#section-3.1.3-1" class="pilcrow">¶</a></p>
+<p id="section-3.1.3-2">To enable inclusion proofs, a specification MUST:<a href="#section-3.1.3-2" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-3.1.3-3">
+<li id="section-3.1.3-3.1">Allow for the revelation of specific fingerprints.<a href="#section-3.1.3-3.1" class="pilcrow">¶</a>
 </li>
-            <li id="section-3.1.3-2.2">Support the easy creation of an inclusion proof that demonstrate how specific data can be hashed to create that specific fingerprint.<a href="#section-3.1.3-2.2" class="pilcrow">¶</a>
+            <li id="section-3.1.3-3.2">Support the easy creation of an inclusion proof that demonstrate how specific data can be hashed to create that specific fingerprint.<a href="#section-3.1.3-3.2" class="pilcrow">¶</a>
 </li>
-            <li id="section-3.1.3-2.3">Enable any holder to create that inclusion proof, not just an issuer.<a href="#section-3.1.3-2.3" class="pilcrow">¶</a>
+            <li id="section-3.1.3-3.3">Enable any holder to create that inclusion proof, not just an issuer.<a href="#section-3.1.3-3.3" class="pilcrow">¶</a>
 </li>
           </ol>
-<p id="section-3.1.3-3">Through this methodology, a holder can create a proof for a specific bit of data, such as their residence in a specific country or state, demonstrate that proof’s creation, and show that it matches the hash of elided data. However, the holder does so only if and when they wish: the data is never known unless they do so.<a href="#section-3.1.3-3" class="pilcrow">¶</a></p>
-<p id="section-3.1.3-4">Though other methodologies exist for proving the content of data, such as Zero-Knowledge Proofs and BBS+ Signatures, inclusion proofs based on hashes provide a much easier solution that is pragmatically more likely to be implemented and thus is more accessible and useable today.<a href="#section-3.1.3-4" class="pilcrow">¶</a></p>
+<p id="section-3.1.3-4">Through this methodology, a holder can create a proof for a specific bit of data, such as their residence in a specific country or state, demonstrate that proof’s creation, and show that it matches the hash of elided data. However, the holder does so only if and when they wish: only the hash is ever public known, the data is never known unless the holder produces a proof.  Usually, the proof is only offered to an entity who is verifying a specific data element, effectively turning it from a data revelation method to a data verification method. This provides strong Data Minimization that is holder controlled.<a href="#section-3.1.3-4" class="pilcrow">¶</a></p>
+<p id="section-3.1.3-5">Though other methodologies exist for proving the content of data, such as Zero-Knowledge Proofs and BBS+ Signatures, inclusion proofs based on hashes provide a much easier solution that is pragmatically more likely to be implemented and thus is more accessible and useable today.<a href="#section-3.1.3-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="facilitate-herd-privacy">
@@ -1357,21 +1360,21 @@ svg :is([fill="white"], [fill^="#fff"]) {
           <h4 id="name-facilitate-herd-privacy">
 <a href="#section-3.1.4" class="section-number selfRef">3.1.4. </a><a href="#name-facilitate-herd-privacy" class="section-name selfRef">Facilitate Herd Privacy</a>
           </h4>
-<p id="section-3.1.4-1">Support for inclusion proofs can also allow for the use of herd privacy, where data about a specific user is contained within a much larger hash of data, which can be widely published without danger. This puts all the agency for data revelation in an individual user’s hand, and does it without any need to “phone home”, meaning that not even the original publisher of the data would know when that data were being checked.<a href="#section-3.1.4-1" class="pilcrow">¶</a></p>
-<p id="section-3.1.4-2">To ensure that inclusion proofs can be extended to herd privacy, a specification must:<a href="#section-3.1.4-2" class="pilcrow">¶</a></p>
+<p id="section-3.1.4-1">Support for inclusion proofs can also allow for the use of herd privacy, where data about a specific user is contained within a much larger hash of data, which can be widely published without danger. This puts all the agency for data revelation in an individual user’s hand and does it without any need to “phone home”, meaning that not even the original publisher of the data would know when that data were being checked.<a href="#section-3.1.4-1" class="pilcrow">¶</a></p>
+<p id="section-3.1.4-2">To facilitate herd privacy, a specification MUST:<a href="#section-3.1.4-2" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-3.1.4-3">
 <li id="section-3.1.4-3.1">Use a branching structure for data storage such as a Merkle Tree where hashes can be further hashed together at high levels in a well-known, regularized way.<a href="#section-3.1.4-3.1" class="pilcrow">¶</a>
 </li>
             <li id="section-3.1.4-3.2">Allow for the publication of top-level or high-level hashes.<a href="#section-3.1.4-3.2" class="pilcrow">¶</a>
 </li>
-            <li id="section-3.1.4-3.3">Enable individual holders to reveal paths that connect their individual data up to the top-level or high-level hash through any number of branches.<a href="#section-3.1.4-3.3" class="pilcrow">¶</a>
+            <li id="section-3.1.4-3.3">Enable individual holders to independently, without aid or assistance, reveal paths that connect their individual data up to the top-level or high-level hash through any number of branches.<a href="#section-3.1.4-3.3" class="pilcrow">¶</a>
 </li>
             <li id="section-3.1.4-3.4">Build that structure in such a way that a minimum of other hashes are revealed when a user reveals a path to their own data; or else ensure that any other hashes revealed are worthless without knowledge of secret data, such as a salt.<a href="#section-3.1.4-3.4" class="pilcrow">¶</a>
 </li>
-            <li id="section-3.1.4-3.5">Otherwise support the creation of inclusion proofs for proving their low-level individual data.<a href="#section-3.1.4-3.5" class="pilcrow">¶</a>
+            <li id="section-3.1.4-3.5">Otherwise support the creation of inclusion proofs for proving an individual holder's low-level individual data without the individual needing to contact the publisher of the data in any way.<a href="#section-3.1.4-3.5" class="pilcrow">¶</a>
 </li>
           </ol>
-<p id="section-3.1.4-4">Ensuring herd privacy in part focuses upon empowering the user, but it also depends on a thoughtful creation of the hash tree structure, such that other information can’t be guessed from the revelation of hashes.<a href="#section-3.1.4-4" class="pilcrow">¶</a></p>
+<p id="section-3.1.4-4">Herd privacy provides further benefits to privacy because a credential publisher can publish data without ever having contact with credential holders, and those holders can then choose to reveal that data, or not, all without any knowledge of the publisher. Requirements #1-4 suggest one way to do so using hashed elision and merkle trees such that other information can’t be guessed from the revelation of hashes, but the requirement #5 says that other methodologies would be acceptable provided they meet the core needs of a herd privacy system.<a href="#section-3.1.4-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1389,8 +1392,8 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <a href="#section-3.2.1" class="section-number selfRef">3.2.1. </a><a href="#name-extend-support-to-encryptio" class="section-name selfRef">Extend Support to Encryption &amp; Compression</a>
           </h4>
 <p id="section-3.2.1-1">A hashed data elision system can be expanded to support both encryption and compression functions, as encrypted and compressed data can also be represented by their hashes without revealing any information about the original data.<a href="#section-3.2.1-1" class="pilcrow">¶</a></p>
-<p id="section-3.2.1-2">Incorporating encryption into a data specification offers the highest level of privacy and of data minimization possible, as data can only be viewed by select individual with the decryption key. This is especially important for Confidentiality, which is referenced in §6.2.15 of RFC 8280.<a href="#section-3.2.1-2" class="pilcrow">¶</a></p>
-<p id="section-3.2.1-3">Hashing encryption primarily improves Authenticity, per §6.2.17 of RFC 8280. As with other sorts of elided data, signatures will remain valid even following compression, provided the signatures are applied to the data hash, not the original data.<a href="#section-3.2.1-3" class="pilcrow">¶</a></p>
+<p id="section-3.2.1-2">Incorporating encryption into a data specification offers the highest level of privacy and of Data Minimization possible, as data can only be viewed by select individual with the decryption key. This is especially important for Confidentiality, which is referenced in §6.2.15 of RFC 8280.<a href="#section-3.2.1-2" class="pilcrow">¶</a></p>
+<p id="section-3.2.1-3">Hashing encrypted data also improves Authenticity, per §6.2.17 of RFC 8280. As with other sorts of elided data, signatures will remain valid even following compression, provided the signatures are applied to the data hash, not the original data.<a href="#section-3.2.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="address-additional-human-rights-threats">
@@ -1398,11 +1401,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
           <h4 id="name-address-additional-human-ri">
 <a href="#section-3.2.2" class="section-number selfRef">3.2.2. </a><a href="#name-address-additional-human-ri" class="section-name selfRef">Address Additional Human Rights Threats</a>
           </h4>
-<p id="section-3.2.2-1">As currently imagined, the Gordian Envelope Internet Draft also offers support for several other Guidelines for Human Rights Considerations that are listed in §6.2 of RFC 8280:<a href="#section-3.2.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.2.2-1">As currently detailed, the Gordian Envelope Internet-Draft also supports several other Guidelines for Human Rights Considerations that are listed in §6.2 of RFC 8280:<a href="#section-3.2.2-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-3.2.2-2.1">Privacy (S.6.2.2). Besides the obvious privacy benefits of data minimization, Gordian Envelope also improves privacy through optional usage of metadata, which can be used to document the sensitivity of contents, retention limits, etc.<a href="#section-3.2.2-2.1" class="pilcrow">¶</a>
+<li class="normal" id="section-3.2.2-2.1">Privacy (S.6.2.2). Besides the obvious privacy benefits of Data Minimization, Gordian Envelope also can improve privacy through optional usage of integrated metadata, which can be used to document the sensitivity of contents, retention limits, etc.<a href="#section-3.2.2-2.1" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-3.2.2-2.2">Accessibility (S.6.2.11). Metadata can also be used to ensure accessibility and internationalization of data through inclusions of references with a variety of localizations.<a href="#section-3.2.2-2.2" class="pilcrow">¶</a>
+            <li class="normal" id="section-3.2.2-2.2">Accessibility (S.6.2.11). Integrated metadata can also be used to ensure accessibility and internationalization of data through inclusions of references with a variety of localizations.<a href="#section-3.2.2-2.2" class="pilcrow">¶</a>
 </li>
             <li class="normal" id="section-3.2.2-2.3">Censorship Resistance (S.6.2.6). Gordian Envelope is built to support SCIDs, or self-certifying identifiers, which can be used to avoid reuse of existing identifiers that might be associated with persons or content.<a href="#section-3.2.2-2.3" class="pilcrow">¶</a>
 </li>
@@ -1423,7 +1426,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <a href="#section-3.2.3" class="section-number selfRef">3.2.3. </a><a href="#name-keep-it-simple" class="section-name selfRef">Keep It Simple</a>
           </h4>
 <p id="section-3.2.3-1">Support for privacy and for human rights has another requirement: it needs to be kept simple so that it finds actual use.<a href="#section-3.2.3-1" class="pilcrow">¶</a></p>
-<p id="section-3.2.3-2">Gordian Envelope <span>[<a href="#GordianEnvelope" class="cite xref">GordianEnvelope</a>]</span> is a fundamentally simple data format that only achieves complexity through iterative structure design.<a href="#section-3.2.3-2" class="pilcrow">¶</a></p>
+<p id="section-3.2.3-2">Gordian Envelope is a fundamentally simple data format that only achieves complexity through iterative structure design.<a href="#section-3.2.3-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1435,7 +1438,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
       <h2 id="name-privacy-considerations">
 <a href="#section-4" class="section-number selfRef">4. </a><a href="#name-privacy-considerations" class="section-name selfRef">Privacy Considerations</a>
       </h2>
-<p id="section-4-1">As outlined, the concept of hashed data elision and, more specifically the Gordian Envelope specification, provide a wide variety of privacy advancements.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<p id="section-4-1">As outlined, the general concept of hashed data elision and the specific design of Gordian Envelope provide a wide variety of privacy advancements. They offer strong support for Data Minimization and other guidelines found in RFC 6973 and RFC 8280.<a href="#section-4-1" class="pilcrow">¶</a></p>
 <p id="section-4-2">The biggest remaining privacy concern is of accidental correlation that can arise if different parties have different versions of the same data, which has been elided in different ways. This is currently seen as an acceptable side-effect of an elision system that allows for Authenticity and Integrity in the system, and can be offset by careful creation of Envelope structures, such as gathering small groups of data into distinct, elided branches.<a href="#section-4-2" class="pilcrow">¶</a></p>
 <p id="section-4-3">However, the question also remains open as to whether there might be more expansive and more automated solutions.<a href="#section-4-3" class="pilcrow">¶</a></p>
 </section>
@@ -1445,7 +1448,8 @@ svg :is([fill="white"], [fill^="#fff"]) {
       <h2 id="name-security-considerations">
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
-<p id="section-5-1">The biggest security considerations focus on the strength of hashing algorithms (and encryption algorithms if they’re used). Potential threats to hashes and encryption such as quantum computing would also result in threats to any hashed data elision system.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-5-1">Hashed data elision is intended to strengthen communication security, primarily by enhancing confidentiality (through elision) while also maintaining data integrity (through hashing). Supporting this with a signature system that signs hashes rather than original data also allows for peer entity authentication, creating a strong foundation for overall communication security.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-5-2">However, that security depends on the strength of hashing algorithms and encryption/signature algorithms. Strong, unbroken hashes and encryption schemes are required. Potential threats to hashes and encryption such as quantum computing would result in threats to any hashed data elision system.<a href="#section-5-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="iana-considerations">
@@ -1453,7 +1457,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
       <h2 id="name-iana-considerations">
 <a href="#section-6" class="section-number selfRef">6. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
-<p id="section-6-1">IANA is separately being queried on the allocation of certain CBOR tags for IANA.<a href="#section-6-1" class="pilcrow">¶</a></p>
+<p id="section-6-1">This document has no IANA actions. Gordian Envelope has already been assigned CBOR tag #200 by IANA.<a href="#section-6-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="sec-informative-references">
@@ -1482,7 +1486,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
       <h2 id="name-acknowledgments">
 <a href="#appendix-A" class="section-number selfRef">Appendix A. </a><a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
       </h2>
-<p id="appendix-A-1">Forthcoming.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
+<p id="appendix-A-1">The authors are grateful for the support of the CBOR working group in discussions of Gordian Envelope and general guidance within the IETF.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="authors-addresses">

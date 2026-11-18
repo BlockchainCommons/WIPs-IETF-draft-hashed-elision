@@ -140,7 +140,7 @@ These compliance needs suggest that a more nuanced solution is needed than even 
 
 ## Human Rights Call for Privacy as Well
 
-The IETF has previously recognized the need for data privacy in two informational RFCs, {{RFC 6973}} and {{RFC 9620}}. Between them, the two offer a large menu of architectural designs to protect data communication protocols and ensure digital human rights.
+The IETF has previously recognized the need for data privacy in two informational RFCs, {{RFC6973}} and {{RFC9620}}. Between them, the two offer a large menu of architectural designs to protect data communication protocols and ensure digital human rights.
 
 Though these RFCs are valuable resources, they unfortunately have not been widely considered in modern standards. Newer regulations such as the GDPR are making them more of a necessity.
 

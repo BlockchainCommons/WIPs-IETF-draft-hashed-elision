@@ -77,10 +77,10 @@ normative:
     trips:
         title: "AGREEMENT ON TRADE-RELATED ASPECTS OF INTELLECTUAL PROPERTY RIGHTS AS AMENDED BY THE 2005 PROTOCOL AMENDING THE TRIPS AGREEMENT"
         target: "https://www.wto.org/english/docs_e/legal_e/downloads_e/TRIPS05_en.pdf"
-    utsa: 
+    utsa:
         title: "Uniform Trade Secrets Act, model law, as amended in 1985 (© The National Conference of Commissioners on Uniform State Laws 1985), United States of America"
         target: "https://www.wipo.int/wipolex/en/legislation/details/3934"
-    
+
 informative:
     RFC6973: Privacy
     RFC9620: Human Rights
@@ -110,7 +110,7 @@ A variety of requirements are converging on the need for deterministic hashed da
 
 ## Companies Generally Need to Protect Secrets
 
-Most generally, companies (and other entities) need to protect digital secrets. 
+Most generally, companies (and other entities) need to protect digital secrets.
 
 The Uniform Trade Secrets Act (1985) [utsa] of the United States requires "reasonable" efforts to protect trade secrets, which is reflected by similar language in the WTO's TRIPs Agrement (1994) [trips]. Specific laws such as the US ADA (1990) [ada] also require the protection of specific data (in this case, related to an employee's disabilities). Fidicuiary duties of confidentiality offer yet another vector where certain peoples or companies might have higher secrecy requirements.
 
@@ -146,7 +146,7 @@ Though these RFCs are valuable resources, they unfortunately have not been widel
 
 ## Data Minimization is Broadly the Answer
 
-Most broadly, the solution to requirements for data protection and erasure is the removal of unnecessary content that is not required for a specific task ("data minimization"), with the data holder deciding exactly what goes to each party ("selective disclosure"). 
+Most broadly, the solution to requirements for data protection and erasure is the removal of unnecessary content that is not required for a specific task ("data minimization"), with the data holder deciding exactly what goes to each party ("selective disclosure").
 
 However, simplistic data minimization is not the full answer. It can impact the integrity and authenticity of the original data set, which are both flagged as things needed to ensure Human Rights in RFC 9620. It also doesn't offer good solutions for the variable access needs of more recent regulations such as the EU Battery Regulation, nor does it address issues like SB 923, which seeks a way to identify a customer without holding personally identifiable information.
 
@@ -173,7 +173,7 @@ The IETF is already working on projects related to these topics:
 * SCITT: The supply chain is generally a strong use case for deterministic hashed data elision, particularly given the non-redactability of some current solutions.
 * SPICE: Though SPICE is currently focused on issuer-determined selective disclosure,  deterministic hashed data elision offers new options.
 * TRANS/PLANTS: Issues with redaction and entry suppression for the TRANS group date back 10 years and have been carried forward to PLANTS. Deterministic hashed data elision could offer solutions within a Merkle Tree.
- 
+
 # Functional Requirements
 
 The following lays out the functional elements that make up the deterministic hashed data elision system being offered as a solution to these largely compliance-related requirements and these use cases.
@@ -186,7 +186,7 @@ Three more specific requirements for the structure follow.
 
 ### Structure Must be Radically Recursive
 
-Requirement: The structure must allow data to underlie data to an effectively infinite depth. 
+Requirement: The structure must allow data to underlie data to an effectively infinite depth.
 
 Purpose: This allows for the creation of complex and meaningful data representations and should permit modeling of a number of different types of graphs, lists, arrays, or other data organizations, creating strong interoperability.
 
@@ -222,7 +222,7 @@ Purpose: You don't want to be able to just remove data, but also to show that el
 
 ## Data Must Be Deletable
 
-Requirement: It must be possible to remove data from the structure in a way that it is no longer possible to prove or even blindly correlate that the data was once part of the structure. 
+Requirement: It must be possible to remove data from the structure in a way that it is no longer possible to prove or even blindly correlate that the data was once part of the structure.
 
 Purpose: This supports rights of erasure and deletion and other situations where elision alone isn't enough.
 
@@ -230,7 +230,7 @@ Purpose: This supports rights of erasure and deletion and other situations where
 
 Requirement: The decisions to elide and make different views must be controlled entirely by the holder of the data, allowing them to do so in a dynamic fashion.
 
-Purpose: This avoids centralization, which could be a time delay, a censorship point, or an information leak. Conflicts over removing phone-home behavior from mDL [nophonehome] have already shown the importance of this requirement. 
+Purpose: This avoids centralization, which could be a time delay, a censorship point, or an information leak. Conflicts over removing phone-home behavior from mDL [nophonehome] have already shown the importance of this requirement.
 
 ## Data Must Remain Signed
 
@@ -240,7 +240,7 @@ Purpose: This ensures that the system doesn't break any signed docs, including n
 
 # The Deterministic Hashed Data Elision Model
 
-The Deterministic Hashed Data Elision Model offers a specific model for meeting the requirements above. 
+The Deterministic Hashed Data Elision Model offers a specific model for meeting the requirements above.
 
 It is assumed to generally meet the structural designs of radical recursiveness and tamper evidence, as they could be implemented in a number of different ways, and doing so is considered trivial; they nonetheless remain vitally important to the overall design.
 
@@ -264,7 +264,7 @@ The determinism adds one more requirement. A specification must:
 
 For data signatures to remain valid, data signing must be done across objects that do not change with elision or deletion. To ensure this, a specification must:
 
-5. Require signing be done against either node hashes or root hashes. 
+5. Require signing be done against either node hashes or root hashes.
 
 A root hash signature will always remain valid, even if all leaves and nodes are removed. A node hash signature will remain valid up to the point where that node hash is itself deleted.
 
@@ -419,9 +419,9 @@ More powerful techniques could improve on this. These include, but are not limit
 
 # Privacy Considerations
 
-As outlined, the general concept of hashed data elision provides a wide variety of privacy advancements. 
+As outlined, the general concept of hashed data elision provides a wide variety of privacy advancements.
 
-The biggest remaining privacy concern is  accidental correlation. Salting is included as a requirement so that elided data can't be uncovered with rainbow tables (or just knowledge of what might be contained). This protects against the correlation of individual data fields. However, a different form of correlation can arise if different parties have different versions of the same data, which has been elided in different ways: they can together piece together a new view that has more content that was originally intended. 
+The biggest remaining privacy concern is  accidental correlation. Salting is included as a requirement so that elided data can't be uncovered with rainbow tables (or just knowledge of what might be contained). This protects against the correlation of individual data fields. However, a different form of correlation can arise if different parties have different versions of the same data, which has been elided in different ways: they can together piece together a new view that has more content that was originally intended.
 
 This is currently seen as an acceptable side-effect of an elision system that offers many other benefits and can be offset by careful creation of structures, such as gathering small groups of data into distinct, elided branches.
 
